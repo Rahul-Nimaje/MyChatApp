@@ -1,32 +1,42 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+     
+      <v-spacer></v-spacer>
+
+   
+    </v-app-bar>
+
+    <v-main>
+      <router-view />
+    </v-main>
+        <v-snackbar
+            v-for="(snackbar, i) in snackbars"
+            :key="i"
+            :color="snackbar.color"
+            :top="snackbar.position === 'top'"
+            :left="snackbar.position === 'left'"
+            :bottom="snackbar.position === 'bottom'"
+            :right="snackbar.position === 'right'"
+            :timeout="snackbar.timeout"
+            :vertical="snackbar.vertical === 'vertical'"
+            v-model="snackbar.showing"
+            :style="`top: ${(i + 1) * 52}px`"
+            >{{ snackbar.text }}</v-snackbar
+        >
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { mapState } from "vuex";
+export default {
+  name: "App",
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  data: () => ({
+    //
+  }),
+   computed: {
+        ...mapState(["snackbars"]),
+    },
+};
+</script>
